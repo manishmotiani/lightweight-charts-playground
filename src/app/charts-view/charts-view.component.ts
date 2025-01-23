@@ -48,7 +48,15 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
     /************************************************************************************************
      * Chart 1
      ************************************************************************************************/
-    const chart = createChart(this.myChart1.nativeElement, { width: 200, height: 300 });
+    const container = this.myChart1.nativeElement;
+    const chart = createChart(container, {
+      width: 200,
+      height: 300,
+      timeScale: {
+        timeVisible: true,
+        secondsVisible: false
+      }
+    });
     const lineSeries: any = chart.addLineSeries();
     lineSeries.setData([
       { value: 1, time: 1642425322 },
@@ -62,6 +70,7 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
       { value: 56, time: 1643116522 },
       { value: 46, time: 1643202922 },
     ]);
+
 
   }
 
