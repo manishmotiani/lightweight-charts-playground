@@ -43,6 +43,21 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
     this.renderChart4();
   }
 
+  addChartLegend(chart: any, container: any, label: any) {
+
+    const symbolName = label;
+    const legend: any = document.createElement('div');
+    legend.style = `position: absolute; left: 16px; top: 16px; z-index: 1; font-size: 18px; font-family: sans-serif; line-height: 18px; font-weight: 600;`;
+    container.appendChild(legend);
+
+    const firstRow = document.createElement('div');
+    firstRow.innerHTML = symbolName;
+    firstRow.style.color = 'black';
+    legend.appendChild(firstRow);
+
+  }
+
+
   renderChart1(): void {
 
     /************************************************************************************************
@@ -50,27 +65,41 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
      ************************************************************************************************/
     const container = this.myChart1.nativeElement;
     const chart = createChart(container, {
-      width: 200,
+      width: 600,
       height: 300,
       timeScale: {
+        borderVisible: true,
         timeVisible: true,
         secondsVisible: false
       }
     });
     const lineSeries: any = chart.addLineSeries();
-    lineSeries.setData([
-      { value: 1, time: 1642425322 },
-      { value: 8, time: 1642511722 },
-      { value: 10, time: 1642598122 },
-      { value: 20, time: 1642684522 },
-      { value: 3, time: 1642770922 },
-      { value: 43, time: 1642857322 },
-      { value: 41, time: 1642943722 },
-      { value: 43, time: 1643030122 },
-      { value: 56, time: 1643116522 },
-      { value: 46, time: 1643202922 },
-    ]);
 
+    this.addChartLegend(chart, container, 'Line Chart');
+
+    // Generate Data points
+    let startTime = Math.floor(new Date('2024-11-01').getTime() / 1000);
+    const endTime = Math.floor(new Date().getTime() / 1000) - (60 * 60 * 12);
+
+    const list = [];
+    while (startTime < endTime) {
+      list.push({
+        value: Math.floor(Math.random() * (100 - 7 + 1)) + 7,
+        time: startTime
+      });
+      startTime += (60 * 60 * 12);
+    }
+
+    lineSeries.setData(list);
+
+
+    // Insert New data points
+    setInterval(() => {
+      lineSeries.update({
+        value: Math.floor(Math.random() * (100 - 7 + 1)) + 7,
+        time: Math.floor(new Date().getTime() / 1000)
+      })
+    }, 1000);
 
   }
 
@@ -78,7 +107,8 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
   renderChart2(): void {
 
     const chartOptions: any = {
-      width: 400, height: 300,
+      width: 600,
+      height: 300,
       layout: {
         textColor: 'black',
         background: { type: 'solid', color: 'white' }
@@ -88,8 +118,9 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
     /************************************************************************************************
      * Chart 2
      ************************************************************************************************/
+    const container = this.myChart2.nativeElement;
     const chart = createChart(this.myChart2.nativeElement, chartOptions);
-    const baselineSeries = chart.addBaselineSeries({
+    const baselineSeries: any = chart.addBaselineSeries({
       baseValue: { type: 'price', price: 25 },
       topLineColor: 'rgba( 38, 166, 154, 1)',
       topFillColor1: 'rgba( 38, 166, 154, 0.28)',
@@ -99,17 +130,32 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
       bottomFillColor2: 'rgba( 239, 83, 80, 0.28)'
     });
 
-    const data: any = [
-      { value: 1, time: 1642425322 },
-      { value: 8, time: 1642511722 },
-      { value: 10, time: 1642598122 },
-      { value: 20, time: 1642684522 },
-      { value: 3, time: 1642770922 },
-      { value: 43, time: 1642857322 },
-      { value: 41, time: 1642943722 },
-      { value: 43, time: 1643030122 },
-      { value: 56, time: 1643116522 },
-      { value: 46, time: 1643202922 }];
+    const data: any = [];
+
+    // Generate Data points
+    let startTime = Math.floor(new Date('2024-11-01').getTime() / 1000);
+    const endTime = Math.floor(new Date().getTime() / 1000) - (60 * 60 * 24);
+    while (startTime < endTime) {
+      data.push({
+        value: Math.floor(Math.random() * (1000 - 7 + 1)) + 7,
+        time: startTime
+      });
+      startTime += (60 * 60 * 24);
+    }
+
+    baselineSeries.setData(data);
+
+    this.addChartLegend(chart, container, 'Base Line Series');
+
+
+    // Insert New data points
+    setInterval(() => {
+
+      baselineSeries.update({
+        value: Math.floor(Math.random() * (1000 - 7 + 1)) + 7,
+        time: Math.floor(new Date().getTime() / 1000)
+      })
+    }, 3000);
 
     baselineSeries.setData(data);
 
@@ -188,15 +234,17 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
     ]);
 
     const chartOptions: any = {
-      width: 600, height: 400,
+      width: 600,
+      height: 300,
       layout: {
         textColor: 'black',
         background: { type: 'solid', color: 'white' },
       },
       // height: 200,
     };
+    const container = this.myChart3.nativeElement;
     /** @type {import('lightweight-charts').IChartApi} */
-    const chart = createChart(this.myChart3.nativeElement, chartOptions);
+    const chart = createChart(container, chartOptions);
 
     // Only needed within demo page
     // eslint-disable-next-line no-undef
@@ -254,6 +302,7 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
       }
     `;
 
+    this.addChartLegend(chart, container, 'Multi Duration Line Series');
     const stylesElement = document.createElement('style');
     stylesElement.innerHTML = styles;
     this.myChart3.nativeElement.appendChild(stylesElement);
@@ -292,7 +341,7 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
     // Only needed within demo page
     // eslint-disable-next-line no-undef
     window.addEventListener('resize', () => {
-      chart.applyOptions({ height: 200 });
+      chart.applyOptions({ height: 300 });
     });
 
     const series = chart.addCandlestickSeries({
@@ -308,6 +357,8 @@ export class ChartsViewComponent implements OnInit, OnChanges, AfterViewInit {
     series.setData(data.initialData);
     chart.timeScale().fitContent();
     chart.timeScale().scrollToPosition(5);
+
+    this.addChartLegend(chart, container, 'Candle Stick');
 
     // simulate real-time data
     function* getNextRealtimeUpdate(realtimeData: any) {
