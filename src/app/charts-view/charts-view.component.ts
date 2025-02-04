@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, Input, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import {RouterModule} from '@angular/router';
 import { createChart } from 'lightweight-charts';
+import {MatButtonModule} from '@angular/material/button';
 
 import { dayData } from './data/day';
 import { monthData } from './data/month';
@@ -10,7 +12,7 @@ import { generateData } from './data/generateCandleData';
 @Component({
   selector: 'app-charts-view',
   standalone: true,
-  imports: [],
+  imports: [RouterModule, MatButtonModule],
   templateUrl: './charts-view.component.html',
   styleUrl: './charts-view.component.scss'
 })
