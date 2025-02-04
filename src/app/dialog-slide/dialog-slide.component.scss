@@ -1,0 +1,31 @@
+.toggle-button {
+  margin-bottom: 12px;
+}
+
+.content {
+  height: 400px;
+  width: 400px;
+  background-color: antiquewhite;
+  margin-right: 60px;
+  display: inline-block;
+}
+
+.content1 {
+  background-color: darkkhaki;
+}
+
+// .hidden {
+// visibility: hidden;
+// display: none;
+// }
+
+.container {
+  width: 1000px;
+  height: 400px;
+}
+
+.inner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px
+}
