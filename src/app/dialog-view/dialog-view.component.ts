@@ -20,7 +20,8 @@ export class DialogViewComponent {
   togglePopup() {
     const dialogRef = this.dialog.open(DialogSlideComponent, {
       width: '480px ',
-      data: { name: 'Ash', animal: 'animal' }
+      data: { name: 'Ash', animal: 'animal' },
+      enterAnimationDuration: 1000
     });
 
     dialogRef.afterClosed().subscribe(result => {

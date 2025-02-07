@@ -32,17 +32,6 @@ export class DialogSlideComponent {
   visible = false;
   step1 = 'show';
   step2 = 'hide';
-  public state: boolean = false;
-  public slowAnimation: ReusableAnimationOptions<string> = {
-    value: '_',
-    params: { duration: 800 },
-  };
-  public fastAnimation: ReusableAnimationOptions<string> = {
-    value: '_',
-    params: { duration: 200 },
-  };
-
-  public durations = [1000, 800, 600, 400, 200, 0];
 
   constructor(
     public dialogRef: MatDialogRef<DialogSlideComponent>,
