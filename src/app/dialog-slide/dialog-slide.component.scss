@@ -19,6 +19,11 @@
 // display: none;
 // }
 
+.outer-container {
+  width: 400px;
+  overflow: hidden;
+}
+
 .container {
   width: 1000px;
   height: 400px;
